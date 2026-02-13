@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>AI浏览器助手</title>
+		<style>
+			/* 基础样式重置 */
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+				background-color: #f5f7fa;
+				overflow: hidden;
+			}
+
+			/* 弹窗容器样式 */
+			#app {
+				width: 100%;
+        min-height: 100vh;
+				background-color: #ffffff;
+				box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+				border-radius: 8px;
+				display: flex;
+				flex-direction: column;
+			}
+
+			/* 滚动条样式优化 */
+			::-webkit-scrollbar {
+				width: 6px;
+				height: 6px;
+			}
+
+			::-webkit-scrollbar-track {
+				background: #f1f1f1;
+				border-radius: 3px;
+			}
+
+			::-webkit-scrollbar-thumb {
+				background: #c1c1c1;
+				border-radius: 3px;
+			}
+
+			::-webkit-scrollbar-thumb:hover {
+				background: #a8a8a8;
+			}
+		</style>
+    <link rel="stylesheet" href="/src/sidePanel/markdown-styles.css" />
+	</head>
+	<body>
+		<!-- Vue 应用挂载点 -->
+		<div id="app"></div>
+
+		<!-- 加载 Vue 应用脚本 -->
+		<script type="module" src="/src/sidePanel/main.js"></script>
+	</body>
+</html>
