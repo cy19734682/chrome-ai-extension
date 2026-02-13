@@ -1,6 +1,6 @@
 // API服务封装 - 提供AI和数据管理的API调用
 const defaultOptions = {
-	baseURL: 'http://localhost:3000',
+	baseURL: 'http://ai2.cy1973.cn',
 	timeout: 30000
 }
 
