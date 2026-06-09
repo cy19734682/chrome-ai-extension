@@ -14,7 +14,6 @@
 		moreActions,
 		handleCloseElm,
 		activeList,
-		currentChat,
 		handleShortcut,
 		handleEnter,
 		sendMessage
@@ -62,7 +61,7 @@
 			<div class="input-action">
 				<el-popover effect="light" trigger="click" v-model:visible="popoverVisible">
 					<template #reference>
-						<el-button circle text :disabled="!!currentChat">
+						<el-button circle text>
 							<el-icon type="primary" size="18"><Operation /></el-icon>
 						</el-button>
 					</template>

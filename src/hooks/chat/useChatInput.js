@@ -10,7 +10,7 @@ import { PictureFilled, Management, Aim, Document } from '@element-plus/icons-vu
  */
 export default function () {
 	// 响应式数据用 storeToRefs 解构
-	const { inpDisabled, currentChat } = storeToRefs(useChatStore())
+	const { inpDisabled } = storeToRefs(useChatStore())
 	// 方法直接从原 store 取，不需要解构
 	const { send } = useChatStore()
 
@@ -31,7 +31,6 @@ export default function () {
 			code: 'CURRENT_PAGE',
 			name: '当前网页',
 			icon: shallowRef(Management),
-			prompt: '你是一名专业的网页内容分析助手，擅长提取关键信息并生成结构清晰的摘要。',
 			action: () => handleSelectPage(true),
 			list: [
 				{
@@ -52,7 +51,6 @@ export default function () {
 			code: 'PAGE_CONTENT',
 			name: '网页正文',
 			icon: shallowRef(Document),
-			prompt: '你是一名专业的网页内容分析助手，擅长提炼信息并输出结构化总结。',
 			action: () => handleSelectPage(false),
 			list: [
 				{
@@ -73,7 +71,6 @@ export default function () {
 			code: 'SELECT_ELEMENT',
 			name: '选中内容',
 			icon: shallowRef(Aim),
-			prompt: '你是一名知识丰富的解释型助手，擅长用通俗易懂的语言解析复杂概念。',
 			action: () => handleStartSelect(),
 			list: [
 				{
@@ -91,7 +88,6 @@ export default function () {
 			name: '截图识别',
 			icon: shallowRef(PictureFilled),
 			action: () => handleStartScreenshot(),
-			prompt: '你是一名专业的图片文本处理助手，擅长修正识别文本中的错别字与逻辑不通顺之处。',
 			list: [
 				{
 					title: '整理并总结截图文字',
@@ -110,8 +106,7 @@ export default function () {
 	 * 快捷对话
 	 */
 	const handleShortcut = async (item) => {
-		const prompt = moreActions.value?.find((e) => selectedCode.value === e.code)?.prompt|| ''
-		const content = prompt + item.content.replace('{{prompt}}', selectedElmData.value.text)
+		const content = item.content.replace('{{prompt}}', selectedElmData.value.text)
 		inputMessage.value = ''
 		await send(content, { ...selectedElmData.value, shortcutTitle: item.title })
 		handleCloseElm()
@@ -140,10 +135,17 @@ export default function () {
 	 * 发送消息
 	 */
 	const sendMessage = async () => {
-		const content = inputMessage.value.trim()
-		if (!content || inpDisabled.value) return
+		const inputContent = inputMessage.value.trim()
+		if (!inputContent || inpDisabled.value) return
 		inputMessage.value = ''
-		await send(content)
+		let shortcutTitle =  ''
+		let content = ''
+		if(selectedElmData.value?.title){
+			shortcutTitle = inputContent
+			content = inputContent + '\n\n 以下是网页提取内容：\n\n' + selectedElmData.value.text
+		}
+		await send(content, { ...selectedElmData.value, shortcutTitle })
+		handleCloseElm()
 	}
 
 	/**
@@ -278,7 +280,6 @@ export default function () {
 		moreActions,
 		activeList,
 		selectedElmData,
-		currentChat,
 		handleCloseElm,
 		handleShortcut,
 		handleEnter,

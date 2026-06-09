@@ -5,7 +5,7 @@ const defaultOptions = {
 }
 
 const chatSettings = {
-	model: 'deepseek-chat',
+	model: 'deepseek-v4-flash',
 	temperature: 0.8,
 	maxTokens: 8192,
 	thinking: true

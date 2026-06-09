@@ -2,6 +2,7 @@ import api from '@/services/api.js'
 import { handleResponse } from '@/utils/index.js'
 import { DB_STORE_META, DB_STORE_MSG, CONNECT_PORT_NAME, CHAT_PORT_KEYS } from '@/utils/constant.js'
 import { getDB } from '@/utils/db.js'
+import { webAssistantPrompt } from '@/utils/prompts.js'
 import { connectService } from '@/services/chrome-api.js'
 
 // 会话映射
@@ -31,6 +32,9 @@ connectService.acceptPort(CONNECT_PORT_NAME, (port) => {
 		tabId = sessionId
 		const db = await getDB()
 		const history = sessionMap[tabId]?.messages || (await db.get(DB_STORE_MSG, tabId)) || []
+		if(history?.length === 0) {
+			history.push({ role: 'system', content: webAssistantPrompt })
+		}
 		history.push({ role: 'user', content })
 
 		const chat = (await db.get(DB_STORE_META, tabId)) || null
