@@ -139,7 +139,7 @@ export default function () {
 		if (!inputContent || inpDisabled.value) return
 		inputMessage.value = ''
 		let shortcutTitle =  ''
-		let content = ''
+		let content = inputContent
 		if(selectedElmData.value?.title){
 			shortcutTitle = inputContent
 			content = inputContent + '\n\n 以下是网页提取内容：\n\n' + selectedElmData.value.text
